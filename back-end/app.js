@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv/config');
 const app = express();
 const postsRoute = require('./routes/posts')
+const authRoute = require('./routes/auth');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -16,7 +17,7 @@ app.use(express.json())
 
 // import routes like middleware
 app.use("/posts", postsRoute)
-
+app.use('/api/user', authRoute)
 // routes
 app.get('/', (req, res) => {
     res.send("We are the world")
