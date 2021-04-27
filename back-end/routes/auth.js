@@ -43,14 +43,14 @@ const hashPassword = await bcrypt.hash(req.body.password, salt)
 
 // LOG IN
 router.post('/login', async(req, res) => {
-    const {error} = await loginValidation(req);
+    const {error} = await loginValidation(req.body);
     if(error) {
         res.status(400).send(error.details[0].message)
     }
 
     // check email exists
-    const emailExists = await Auth.findOne({email: req.body.email})
-    if(!emailExists) {
+    const user = await Auth.findOne({email: req.body.email})
+    if(!user) {
         return res.status(400).send('Email is not found!')
     }
 
