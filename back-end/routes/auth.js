@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Auth = require("../models/Auth");
 const { registerValidation, loginValidation } = require('../validation');
 const bcrypt = require('bcryptjs');
-const e = require("express");
+const jwt = require('jsonwebtoken');
 
 // NEW WAY WORK WITH JOI TO VALIDATE DATA
 router.post('/register', async (req, res) => {
@@ -60,7 +60,10 @@ router.post('/login', async(req, res) => {
         return res.status(400).send('Wrong password!')
     }
 
-    res.status(200).send("Logged in!")
+    // create and assign new token
+    const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET)
+    res.header("auth-token", token);
+    res.status(200).send(token);
 })
 
 module.exports = router;

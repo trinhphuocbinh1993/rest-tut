@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv/config');
 const app = express();
-const postsRoute = require('./routes/posts')
+const postsRoute = require('./routes/posts');
+const PostRoute2 = require('./routes/posts2');
 const authRoute = require('./routes/auth');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -16,7 +17,8 @@ app.use(express.urlencoded({extended : true}));
 app.use(express.json())
 
 // import routes like middleware
-app.use("/posts", postsRoute)
+app.use("/posts", postsRoute);
+app.use('/posts2', PostRoute2);
 app.use('/api/user', authRoute)
 // routes
 app.get('/', (req, res) => {
